@@ -15,7 +15,7 @@ datasource db {
 model Store {
   id       String  @id @default(uuid())
   name     String  
-  useID    String
+  userId   String
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
