@@ -5,8 +5,8 @@ import { prismadb } from "@/lib/prisamdb";
 import Navbar from "@/components/navbar";
 
 export default async function DashboardLayout({ children, params }: {
-    children: React.ReactNode;
-    params: { storeId: string }
+    children: React.ReactNode
+    params: { storeid: string }
 }) {
     const { userId } = auth();
 
@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children, params }: {
 
     const store = await prismadb.store.findFirst({
         where: {
-            id: params.storeId,
+            id: params.storeid,
             userId
         }
     });
