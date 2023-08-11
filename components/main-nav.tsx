@@ -11,10 +11,15 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
 
     const routes = [
         {
+            href: `/${params.storeid}`,
+            label: 'Overview',
+            active: pathname === `/${params.storeid}`,
+        },
+        {
             href: `/${params.storeid}/settings`,
             label: 'Settings',
             active: pathname === `/${params.storeid}/settings`,
-        }
+        },
     ];
 
 
