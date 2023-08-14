@@ -42,6 +42,8 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "prisma": "^5.0.0"
+    "i": "file:prisma/client@latest",
+    "npm": "^9.8.1",
+    "prisma": "^5.1.1"
   }
 }
