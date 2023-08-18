@@ -62,25 +62,28 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
     const onSubmit = async (data: BillboardFormValues) => {
         try {
             setLoading(true);
-            await axios.patch(`/api/stores/${params.storeid}`, data);
+            if (initialData) {
+                await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, data);
+            } else {
+                await axios.post(`/api/${params.storeId}/billboards`, data);
+            }
             router.refresh();
-            toast.success("Store updated.");
+            toast.success(toastMessage);
         } catch (error) {
             toast.error("Something went wrong.");
         } finally {
             setLoading(false);
         }
     };
-
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/stores/${params.storeid}`);
+            await axios.delete(`/api/stores/${params.storeId}/billboards/${params.billboardId}`);
             router.refresh();
             router.push("/");
-            toast.success("Store deleted.");
+            toast.success("Billboard deleted.");
         } catch (error) {
-            toast.error("Make sure you removed all products and categories frist.");
+            toast.error("Make sure you removed all using this billboard categories frist.");
         } finally {
             setLoading(false)
             setOpen(false)
