@@ -34,6 +34,7 @@ export async function PATCH(
 ) {
     try {
         const { userId } = auth();
+        console.log(userId)
 
         const body = await req.json();
 
