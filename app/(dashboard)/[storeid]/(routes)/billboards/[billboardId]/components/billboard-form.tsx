@@ -66,6 +66,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
                 await axios.post(`/api/${params.storeid}/billboards`, data);
             }
             router.refresh();
+            router.push(`/${params.storeid}/billboards`);
             toast.success(toastMessage);
         } catch (error) {
             toast.error("Something went wrong.");
@@ -76,12 +77,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/stores/${params.storeId}/billboards/${params.billboardId}`);
+            await axios.delete(`/api/${params.storeid}/billboards/${params.billboardId}`);
             router.refresh();
-            router.push("/");
+            router.push(`/${params.storeid}/billboards`);
             toast.success("Billboard deleted.");
         } catch (error) {
-            toast.error("Make sure you removed all using this billboard categories frist.");
+            toast.error("Make sure you removed all categories using this billboard first.");
         } finally {
             setLoading(false)
             setOpen(false)
@@ -153,7 +154,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ initialData }) => 
                     </Button>
                 </form>
             </Form>
-            <Separator />
         </>
     )
 };
