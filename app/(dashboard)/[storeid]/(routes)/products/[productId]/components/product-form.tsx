@@ -51,7 +51,7 @@ const formSchema = z.object({
     isArchived: z.boolean().default(false).optional(),
 });
 
-type ProductFormValues = z.infer<typeof formSchema>;
+type ProductFormValues = z.infer<typeof formSchema>
 
 interface ProductFormProps {
     initialData: Product & {
