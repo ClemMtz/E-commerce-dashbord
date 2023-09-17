@@ -9,6 +9,7 @@ import { prismadb } from "@/lib/prisamdb";
 
 
 
+
 const corsHeaders = {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -19,6 +20,8 @@ const corsHeaders = {
 export async function OPTIONS() {
     return NextResponse.json({}, { headers: corsHeaders });
 };
+
+
 
 export async function POST(
     req: Request,

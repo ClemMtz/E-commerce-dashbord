@@ -1,12 +1,13 @@
+import Stripe from "stripe";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 
 import { prismadb } from "@/lib/prisamdb";
 
-export async function POST(req: Request) {
+
+export async function POST(req: Request,) {
     const body = await req.text();
     const signature = headers().get("Stripe-Signature") as string;
 
@@ -34,7 +35,7 @@ export async function POST(req: Request) {
         adress?.country,
     ];
 
-    const adressString = adressComponents.filter((c) => c !== null).join(", ");
+    const adressString = adressComponents.filter((c) => c !== null).join(', ');
 
     if (event.type === "checkout.session.completed") {
         const order = await prismadb.order.update({
@@ -65,5 +66,5 @@ export async function POST(req: Request) {
         });
     }
 
-    new NextResponse(null, { status: 200 });
-}
+    return new NextResponse(null, { status: 200 });
+};
