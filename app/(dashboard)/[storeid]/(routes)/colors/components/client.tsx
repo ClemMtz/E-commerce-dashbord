@@ -12,12 +12,12 @@ import { DataTable } from "@/components/ui/data-table";
 import { ColorColumn, columns } from "./columns";
 import { ApiList } from "@/components/ui/api-list";
 
-interface ColorsClientProps {
+type ColorsClientProps = {
     data: ColorColumn[]
 }
 
 
-export const ColorsClient: React.FC<ColorsClientProps> = ({ data }) => {
+export const ColorsClient = ({ data }: ColorsClientProps) => {
     const router = useRouter();
     const params = useParams();
     return (

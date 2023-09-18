@@ -8,12 +8,12 @@ import { DataTable } from "@/components/ui/data-table";
 import { OrderColumn, columns } from "./columns";
 
 
-interface OrderClientProps {
+type OrderClientProps = {
     data: OrderColumn[]
 }
 
 
-export const OrderClient: React.FC<OrderClientProps> = ({ data }) => {
+export const OrderClient = ({ data }: OrderClientProps) => {
 
     return (
         <>

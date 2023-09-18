@@ -18,12 +18,12 @@ import { AlertModal } from "@/components/modals/alert-modals";
 
 import { CategoryColumn } from "./columns";
 
-interface CellActionProps {
+type CellActionProps = {
     data: CategoryColumn;
 };
 
 
-export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+export const CellAction = ({ data }: CellActionProps) => {
     const router = useRouter();
     const params = useParams();
 

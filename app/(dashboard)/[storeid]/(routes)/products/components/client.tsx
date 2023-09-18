@@ -12,12 +12,12 @@ import { DataTable } from "@/components/ui/data-table";
 import { ProductColumn, columns } from "./columns";
 import { ApiList } from "@/components/ui/api-list";
 
-interface ProductClientProps {
+type ProductClientProps = {
     data: ProductColumn[]
 }
 
 
-export const ProductClient: React.FC<ProductClientProps> = ({ data }) => {
+export const ProductClient = ({ data }: ProductClientProps) => {
     const router = useRouter();
     const params = useParams();
     return (

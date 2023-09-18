@@ -53,7 +53,7 @@ const formSchema = z.object({
 
 type ProductFormValues = z.infer<typeof formSchema>
 
-interface ProductFormProps {
+type ProductFormProps = {
     initialData: Product & {
         images: Image[]
     } | null;
@@ -62,7 +62,7 @@ interface ProductFormProps {
     sizes: Size[];
 };
 
-export const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colors, sizes }) => {
+export const ProductForm = ({ initialData, categories, colors, sizes }: ProductFormProps) => {
     const params = useParams();
     const router = useRouter();
 

@@ -32,11 +32,11 @@ const formSchema = z.object({
 
 type SizeFormValues = z.infer<typeof formSchema>;
 
-interface SizeFormProps {
+type SizeFormProps = {
     initialData: Size | null;
 };
 
-export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
+export const SizeForm = ({ initialData }: SizeFormProps) => {
     const params = useParams();
     const router = useRouter();
 

@@ -7,12 +7,12 @@ import { useOrigin } from "@/hooks/use-origin";
 import { ApiAlert } from "@/components/ui/api-alert";
 
 
-interface ApiLIstProps {
+type ApiLIstProps = {
     entityName: string;
     entityIdName: string;
 }
 
-export const ApiList: React.FC<ApiLIstProps> = ({ entityName, entityIdName }) => {
+export const ApiList = ({ entityName, entityIdName }: ApiLIstProps) => {
     const params = useParams();
     const origin = useOrigin();
 

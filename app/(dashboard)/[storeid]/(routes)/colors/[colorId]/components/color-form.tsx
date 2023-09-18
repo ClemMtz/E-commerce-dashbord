@@ -34,11 +34,11 @@ const formSchema = z.object({
 
 type ColorFormValues = z.infer<typeof formSchema>;
 
-interface ColorFormProps {
+type ColorFormProps = {
     initialData: Color | null;
 };
 
-export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
+export const ColorForm = ({ initialData }: ColorFormProps) => {
     const params = useParams();
     const router = useRouter();
 

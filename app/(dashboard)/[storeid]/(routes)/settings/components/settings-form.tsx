@@ -26,7 +26,7 @@ import { AlertModal } from "@/components/modals/alert-modals";
 import { ApiAlert } from "@/components/ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
 
-interface SettingsFormProps {
+type SettingsFormProps = {
     initialData: Store;
 };
 
@@ -36,7 +36,7 @@ const formSchema = z.object({
 
 type SettingsFormValues = z.infer<typeof formSchema>;
 
-export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
+export const SettingsForm = ({ initialData }: SettingsFormProps) => {
     const params = useParams();
     const router = useRouter();
     const origin = useOrigin();

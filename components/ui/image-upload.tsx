@@ -7,14 +7,14 @@ import { CldUploadWidget } from "next-cloudinary";
 
 import { Button } from "@/components/ui/button";
 
-interface ImageUploadProps {
+type ImageUploadProps = {
     disabled?: boolean;
     onChange: (value: String) => void;
     onRemove: (value: String) => void;
     value: string[];
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ disabled, onChange, onRemove, value }) => {
+const ImageUpload = ({ disabled, onChange, onRemove, value }: ImageUploadProps) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
