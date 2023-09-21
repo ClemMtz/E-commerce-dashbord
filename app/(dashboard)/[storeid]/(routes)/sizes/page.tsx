@@ -2,8 +2,9 @@ import { format } from "date-fns";
 
 import { prismadb } from "@/lib/prisamdb";
 
-import { SizesClient } from "./components/client";
-import { SizeColumn } from "./components/columns";
+import { SizeColumn, columns } from "./components/columns";
+
+import { GeneralClient } from "@/components/ui/general-client";
 
 const SizesPage = async ({ params }: { params: { storeId: string } }) => {
     const sizes = await prismadb.size.findMany({
@@ -26,7 +27,13 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <SizesClient data={formatedSizes} />
+                <GeneralClient
+                    data={formatedSizes}
+                    type="sizes"
+                    typeCapitalName="Sizes"
+                    typeId="sizeId"
+                    columns={columns}
+                />
             </div>
         </div>
     )

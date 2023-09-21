@@ -2,8 +2,9 @@ import { format } from "date-fns";
 
 import { prismadb } from "@/lib/prisamdb";
 
-import { CategoryClient } from "./components/client";
-import { CategoryColumn } from "./components/columns";
+
+import { CategoryColumn, columns } from "./components/columns";
+import { GeneralClient } from "@/components/ui/general-client";
 
 const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
     const categories = await prismadb.category.findMany({
@@ -29,7 +30,13 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <CategoryClient data={formatedCategories} />
+                <GeneralClient
+                    data={formatedCategories}
+                    type="categories"
+                    typeCapitalName="Categories"
+                    typeId="categoryId"
+                    columns={columns}
+                />
             </div>
         </div>
     )

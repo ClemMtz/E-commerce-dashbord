@@ -2,8 +2,8 @@ import { format } from "date-fns";
 
 import { prismadb } from "@/lib/prisamdb";
 
-import { ColorsClient } from "./components/client";
-import { ColorColumn } from "./components/columns";
+import { ColorColumn, columns } from "./components/columns";
+import { GeneralClient } from "@/components/ui/general-client";
 
 const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
     const colors = await prismadb.color.findMany({
@@ -26,7 +26,13 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <ColorsClient data={formatedColors} />
+                <GeneralClient
+                    data={formatedColors}
+                    type="colors"
+                    typeCapitalName="Colors"
+                    typeId="colorId"
+                    columns={columns}
+                />
             </div>
         </div>
     )
