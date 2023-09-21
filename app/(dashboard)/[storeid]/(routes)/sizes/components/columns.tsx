@@ -2,7 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import { CellAction } from "./cell-action";
+
+import { CellAction } from "@/components/ui/cell-action";
 
 
 export type SizeColumn = {
@@ -27,7 +28,7 @@ export const columns: ColumnDef<SizeColumn>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => <CellAction data={row.original} />
+        cell: ({ row }) => <CellAction data={row.original} type="size" typeCapitalName="Size" pathName="sizes" />
     }
 
 ]

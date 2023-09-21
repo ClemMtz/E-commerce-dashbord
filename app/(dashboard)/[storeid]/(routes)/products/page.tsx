@@ -5,7 +5,7 @@ import { formatteur } from "@/lib/utils";
 
 
 import { ProductColumn, columns } from "./components/columns";
-import { GeneralClient } from "@/components/ui/general-client";
+import { Client } from "@/components/ui/client";
 
 const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     const products = await prismadb.product.findMany({
@@ -22,7 +22,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
         }
     });
 
-    const formattedProducts: ProductColumn[] = products.map((item) => ({
+    const formattedProducts: ProductColumn[] = products.map((item: any) => ({
         id: item.id,
         name: item.name,
         isFeatured: item.isFeatured,
@@ -38,7 +38,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <GeneralClient
+                <Client
                     data={formattedProducts}
                     type="products"
                     typeCapitalName="Products"

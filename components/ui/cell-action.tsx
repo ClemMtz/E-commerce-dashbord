@@ -16,14 +16,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { AlertModal } from "@/components/modals/alert-modals";
 
-import { ColorColumn } from "./columns";
+
 
 type CellActionProps = {
-    data: ColorColumn;
+    data: any;
+    type: string;
+    typeCapitalName: string;
+    pathName: string
 };
 
 
-export const CellAction = ({ data }: CellActionProps) => {
+export const CellAction = ({ data, type, typeCapitalName, pathName }: CellActionProps) => {
     const router = useRouter();
     const params = useParams();
 
@@ -32,18 +35,18 @@ export const CellAction = ({ data }: CellActionProps) => {
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
-        toast.success("Color Id copied to the clipboard.");
+        toast.success(`${typeCapitalName} Id copied to the clipboard.`);
 
     };
 
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeid}/colors/${data.id}`);
+            await axios.delete(`/api/${params.storeid}/${pathName}/${data.id}`);
             router.refresh();
-            toast.success("Color deleted.");
+            toast.success(`${typeCapitalName} deleted.`);
         } catch (error) {
-            toast.error("Make sure you removed all products using this color first.");
+            toast.error(`Make sure you removed all categories using this ${type} first.`);
         } finally {
             setLoading(false)
             setOpen(false)
@@ -73,7 +76,7 @@ export const CellAction = ({ data }: CellActionProps) => {
                         <Copy className="mr-2 h-4 w-4" />
                         Copy Id
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeid}/colors/${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeid}/${pathName}/${data.id}`)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Update
                     </DropdownMenuItem>

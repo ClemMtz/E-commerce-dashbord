@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { prismadb } from "@/lib/prisamdb";
 
 import { ColorColumn, columns } from "./components/columns";
-import { GeneralClient } from "@/components/ui/general-client";
+import { Client } from "@/components/ui/client";
 
 const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
     const colors = await prismadb.color.findMany({
@@ -15,7 +15,7 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
         }
     });
 
-    const formatedColors: ColorColumn[] = colors.map((item) => ({
+    const formatedColors: ColorColumn[] = colors.map((item: any) => ({
         id: item.id,
         name: item.name,
         value: item.value,
@@ -26,7 +26,7 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <GeneralClient
+                <Client
                     data={formatedColors}
                     type="colors"
                     typeCapitalName="Colors"

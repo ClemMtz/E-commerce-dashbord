@@ -20,7 +20,7 @@ type ClientProps = {
 }
 
 
-export const GeneralClient = ({ data, type, typeId, typeCapitalName, columns }: ClientProps) => {
+export const Client = ({ data, type, typeId, typeCapitalName, columns }: ClientProps) => {
     const router = useRouter();
     const params = useParams();
     return (

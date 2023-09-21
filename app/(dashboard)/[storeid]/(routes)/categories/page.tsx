@@ -4,7 +4,7 @@ import { prismadb } from "@/lib/prisamdb";
 
 
 import { CategoryColumn, columns } from "./components/columns";
-import { GeneralClient } from "@/components/ui/general-client";
+import { Client } from "@/components/ui/client";
 
 const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
     const categories = await prismadb.category.findMany({
@@ -19,7 +19,7 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
         }
     });
 
-    const formatedCategories: CategoryColumn[] = categories.map((item) => ({
+    const formatedCategories: CategoryColumn[] = categories.map((item: any) => ({
         id: item.id,
         name: item.name,
         billboardLabel: item.billboard.label,
@@ -30,7 +30,7 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
     return (
         <div className="flex-col">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <GeneralClient
+                <Client
                     data={formatedCategories}
                     type="categories"
                     typeCapitalName="Categories"
