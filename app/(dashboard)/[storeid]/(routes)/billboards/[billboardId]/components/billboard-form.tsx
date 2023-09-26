@@ -26,7 +26,7 @@ import { AlertModal } from "@/components/modals/alert-modals";
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
-    label: z.string().min(1),
+    name: z.string().min(1),
     imageUrl: z.string().min(1)
 });
 
@@ -51,7 +51,7 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
     const form = useForm<BillboardFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
-            label: "",
+            name: "",
             imageUrl: ""
         }
     });
@@ -136,10 +136,10 @@ export const BillboardForm = ({ initialData }: BillboardFormProps) => {
                     <div className="grid grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
-                            name="label"
+                            name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Label</FormLabel>
+                                    <FormLabel>Name</FormLabel>
                                     <FormControl>
                                         <Input disabled={loading} placeholder="Billborad label"  {...field} />
                                     </FormControl>
