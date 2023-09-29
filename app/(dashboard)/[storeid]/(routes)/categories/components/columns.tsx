@@ -9,9 +9,10 @@ import { CellAction } from "@/components/ui/cell-action";
 export type CategoryColumn = {
     id: string;
     name: string;
-    billboardLabel: string;
+    billboardName: string;
     createdAt: string;
 }
+
 
 export const columns: ColumnDef<CategoryColumn>[] = [
     {
@@ -19,9 +20,9 @@ export const columns: ColumnDef<CategoryColumn>[] = [
         header: "Name",
     },
     {
-        accessorKey: "billboard",
+        accessorKey: "billboardName",
         header: "Billboard",
-        cell: ({ row }) => row.original.billboardLabel,
+        cell: ({ row }) => row.original.billboardName,
     },
     {
         accessorKey: "createdAt",
@@ -31,5 +32,6 @@ export const columns: ColumnDef<CategoryColumn>[] = [
         id: "actions",
         cell: ({ row }) => <CellAction data={row.original} type="category" typeCapitalName="Category" pathName="categories" />
     }
+
 
 ]

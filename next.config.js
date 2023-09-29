@@ -4,7 +4,14 @@ const nextConfig = {
         domains: [
             "res.cloudinary.com"
         ]
-    }
+    },
+    experimental: {
+        serverActions: true,
+    },
+
+
 }
+
+
 
 module.exports = nextConfig
