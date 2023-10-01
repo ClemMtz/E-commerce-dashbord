@@ -7,6 +7,7 @@ import { FormHandler } from "@/components/ui/form-handler";
 
 
 
+
 const ColorPage = async ({ params }: { params: { colorId: string } }) => {
     const color = await prismadb.color.findUnique({
         where: {
@@ -25,6 +26,7 @@ const ColorPage = async ({ params }: { params: { colorId: string } }) => {
                     types="colors"
                     formLabelOne="name"
                     formLabelTwo="value"
+                    hex="#000"
                 />
             </div>
         </div>

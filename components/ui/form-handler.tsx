@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
+import { zodResolverServer } from '@/components/resolver/form-zodResolver';
 
 import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
@@ -17,32 +18,40 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    FormMessage
+    FormMessage,
 } from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modals";
-import { zodResolverServer } from "@/app/(dashboard)/[storeid]/(routes)/colors/[colorId]/components/form-schema";
 
 
 
 type DataFormValues = {
     name: string;
     value: string;
+    // bilboardId?: string;
 };
 
 
-type FormHandlerProps = {
+export type FormHandlerProps = {
     type: string;
     Type: string;
     types: string;
     typeId: string;
+    hex: string;
     initialData: any;
+    billboards?: any;
     formLabelOne: any;
     formLabelTwo: any;
-
 }
 
-export const FormHandler = ({ initialData, type, Type, types, formLabelOne, formLabelTwo }: FormHandlerProps) => {
+export const FormHandler = ({ initialData, type, Type, types, formLabelOne, formLabelTwo, hex, billboards }: FormHandlerProps) => {
     const params = useParams();
     const router = useRouter();
 
@@ -59,7 +68,8 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
         resolver: zodResolverServer,
         defaultValues: initialData || {
             name: "",
-            value: ""
+            value: "",
+            // billboardId: ""
         }
     });
 
@@ -130,37 +140,74 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
                                 <FormItem>
                                     <FormLabel>{formLabelOne}</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Color name"  {...field} />
+                                        <Input disabled={loading} placeholder={`${Type} name`}  {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name={formLabelTwo}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>{formLabelTwo}</FormLabel>
-                                    <FormControl>
-                                        <div className="flex items-center gap-x-4">
-                                            <Input disabled={loading} placeholder="Color value"  {...field} />
-                                            <div
-                                                className="border p-4 rounded-full"
-                                                style={{ backgroundColor: field.value }}
-                                            />
-                                        </div>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        {
+                            Type === "Categorie" ?
+                                <FormField
+                                    control={form.control}
+                                    name={formLabelTwo}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>{formLabelTwo}</FormLabel>
+                                            <Select
+                                                disabled={loading}
+                                                onValueChange={field.onChange}
+                                                value={field.value}
+                                                defaultValue={field.value}
+                                            >
+                                                <FormControl>
+                                                    <SelectTrigger>
+                                                        <SelectValue
+                                                            defaultValue={field.value}
+                                                            placeholder="Select a billboard" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent>
+                                                    {billboards.map((billboard: { id: string; name: string }) => (
+                                                        <SelectItem key={billboard.id} value={billboard.id}>
+                                                            {billboard.name}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                :
+                                <FormField
+                                    control={form.control}
+                                    name={formLabelTwo}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>{formLabelTwo}</FormLabel>
+                                            <FormControl>
+                                                <div className="flex items-center gap-x-2 ">
+                                                    <Input disabled={loading} placeholder={`${Type} value ${hex}`}  {...field} />
+                                                    {Type === "Color" &&
+                                                        <div
+                                                            className="border p-4  rounded-full"
+                                                            style={{ backgroundColor: field.value }}
+                                                        />
+                                                    }
+                                                </div>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                        }
                     </div>
                     <Button disabled={loading} className="ml-auto" type="submit">
                         {action}
                     </Button>
                 </form>
-            </Form>
+            </Form >
         </>
     )
 };
