@@ -8,6 +8,8 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolverServer } from '@/components/resolver/form-zodResolver';
+import { zodResolverServerCategorie } from "../resolver/form-zodResolverCategorie";
+import { zodResolverServerBillboard } from "../resolver/form-zodResolverBillboard";
 
 import { Heading } from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
@@ -28,6 +30,7 @@ import {
     SelectValue
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import ImageUpload from "@/components/ui/image-upload";
 import { AlertModal } from "@/components/modals/alert-modals";
 
 
@@ -35,7 +38,8 @@ import { AlertModal } from "@/components/modals/alert-modals";
 type DataFormValues = {
     name: string;
     value: string;
-    // bilboardId?: string;
+    bilboardId: string;
+    imageUrl: string;
 };
 
 
@@ -64,14 +68,19 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
     const action = initialData ? "Save changes" : "Create";
 
 
+
     const form = useForm<DataFormValues>({
-        resolver: zodResolverServer,
+        resolver: Type === 'Categorie' ? zodResolverServerCategorie : Type === "Billboard" ? zodResolverServerBillboard : zodResolverServer,
         defaultValues: initialData || {
             name: "",
             value: "",
-            // billboardId: ""
+            billboardId: "",
+            imageUrl: ""
         }
     });
+
+
+
 
     const onSubmit = async (data: DataFormValues) => {
         try {
@@ -90,6 +99,7 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
             setLoading(false);
         }
     };
+
     const onDelete = async () => {
         try {
             setLoading(true);
@@ -147,61 +157,81 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
                             )}
                         />
                         {
-                            Type === "Categorie" ?
+                            Type === "Billboard" ?
                                 <FormField
                                     control={form.control}
                                     name={formLabelTwo}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>{formLabelTwo}</FormLabel>
-                                            <Select
-                                                disabled={loading}
-                                                onValueChange={field.onChange}
-                                                value={field.value}
-                                                defaultValue={field.value}
-                                            >
-                                                <FormControl>
-                                                    <SelectTrigger>
-                                                        <SelectValue
-                                                            defaultValue={field.value}
-                                                            placeholder="Select a billboard" />
-                                                    </SelectTrigger>
-                                                </FormControl>
-                                                <SelectContent>
-                                                    {billboards.map((billboard: { id: string; name: string }) => (
-                                                        <SelectItem key={billboard.id} value={billboard.id}>
-                                                            {billboard.name}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                :
-                                <FormField
-                                    control={form.control}
-                                    name={formLabelTwo}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>{formLabelTwo}</FormLabel>
+                                            <FormLabel>Background image</FormLabel>
                                             <FormControl>
-                                                <div className="flex items-center gap-x-2 ">
-                                                    <Input disabled={loading} placeholder={`${Type} value ${hex}`}  {...field} />
-                                                    {Type === "Color" &&
-                                                        <div
-                                                            className="border p-4  rounded-full"
-                                                            style={{ backgroundColor: field.value }}
-                                                        />
-                                                    }
-                                                </div>
+                                                <ImageUpload
+                                                    value={field.value ? [field.value] : []}
+                                                    disabled={loading}
+                                                    onChange={(url) => field.onChange(url)}
+                                                    onRemove={() => field.onChange("")}
+                                                />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
                                 />
+                                : Type === "Categorie" ?
+                                    <FormField
+                                        control={form.control}
+                                        name={formLabelTwo}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>billboard</FormLabel>
+                                                <Select
+                                                    disabled={loading}
+                                                    onValueChange={field.onChange}
+                                                    value={field.value}
+                                                    defaultValue={field.value}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger>
+                                                            <SelectValue
+                                                                defaultValue={field.value}
+                                                                placeholder="Select a billboard" />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {billboards.map((billboard: { id: string; name: string; }) => (
+                                                            <SelectItem key={billboard.id} value={billboard.id}>
+                                                                {billboard.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    :
+                                    <FormField
+                                        control={form.control}
+                                        name={formLabelTwo}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>{formLabelTwo}</FormLabel>
+                                                <FormControl>
+                                                    <div className="flex items-center gap-x-2 ">
+                                                        <Input disabled={loading} placeholder={`${Type} value ${hex}`}  {...field} />
+                                                        {Type === "Color" &&
+                                                            <div
+                                                                className="border p-4  rounded-full"
+                                                                style={{ backgroundColor: field.value }}
+                                                            />
+                                                        }
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                         }
+
                     </div>
                     <Button disabled={loading} className="ml-auto" type="submit">
                         {action}

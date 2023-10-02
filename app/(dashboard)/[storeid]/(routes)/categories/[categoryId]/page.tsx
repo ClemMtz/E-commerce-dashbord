@@ -27,7 +27,7 @@ const CategoryPage = async ({ params }: { params: { categoryId: string, storeId:
                     typeId="categorieId"
                     types="categories"
                     formLabelOne="name"
-                    formLabelTwo="billboard"
+                    formLabelTwo="billboardId"
                     hex=""
                 />
             </div>
