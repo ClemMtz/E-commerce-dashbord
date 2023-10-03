@@ -163,7 +163,7 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
                                     name={formLabelTwo}
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Background image</FormLabel>
+                                            <FormLabel>background image</FormLabel>
                                             <FormControl>
                                                 <ImageUpload
                                                     value={field.value ? [field.value] : []}
@@ -236,7 +236,7 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
                     <Button disabled={loading} className="ml-auto" type="submit">
                         {action}
                     </Button>
-                </form>
+                </form >
             </Form >
         </>
     )

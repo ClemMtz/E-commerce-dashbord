@@ -39,19 +39,21 @@ import {
 } from "@/components/ui/select";
 import ImageUpload from "@/components/ui/image-upload";
 import { Checkbox } from "@/components/ui/checkbox";
+import { zodResolverServerProduct } from "@/components/resolver/form-zodResolverProduct";
 
-const formSchema = z.object({
-    name: z.string().min(1),
-    images: z.object({ url: z.string() }).array(),
-    price: z.coerce.number().min(1),
-    categoryId: z.string().min(1),
-    colorId: z.string().min(1),
-    sizeId: z.string().min(1),
-    isFeatured: z.boolean().default(false).optional(),
-    isArchived: z.boolean().default(false).optional(),
-});
 
-type ProductFormValues = z.infer<typeof formSchema>
+
+type ProductFormValues = {
+    name: string;
+    images: any;
+    price: number;
+    categoryId: string;
+    colorId: string;
+    sizeId: string;
+    isFeatured: boolean;
+    isArchived: boolean;
+
+}
 
 type ProductFormProps = {
     initialData: Product & {
@@ -75,7 +77,7 @@ export const ProductForm = ({ initialData, categories, colors, sizes }: ProductF
     const action = initialData ? "Save changes" : "Create";
 
     const form = useForm<ProductFormValues>({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolverServerProduct,
         defaultValues: initialData ? {
             ...initialData,
             price: parseFloat(String(initialData?.price)),
@@ -159,10 +161,10 @@ export const ProductForm = ({ initialData, categories, colors, sizes }: ProductF
                                 <FormLabel>Images</FormLabel>
                                 <FormControl>
                                     <ImageUpload
-                                        value={field.value.map((image) => image.url)}
+                                        value={field.value.map((image: any) => image.url)}
                                         disabled={loading}
                                         onChange={(url) => field.onChange([...field.value, { url }])}
-                                        onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url)])}
+                                        onRemove={(url) => field.onChange([...field.value.filter((current: any) => current.url !== url)])}
                                     />
                                 </FormControl>
                                 <FormMessage />
