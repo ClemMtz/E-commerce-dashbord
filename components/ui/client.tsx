@@ -15,19 +15,19 @@ type ClientProps = {
     data: any;
     type: string;
     typeId: string;
-    typeCapitalName: string;
+    Types: string;
     columns: any;
 }
 
 
-export const Client = ({ data, type, typeId, typeCapitalName, columns }: ClientProps) => {
+export const Client = ({ data, type, typeId, Types, columns }: ClientProps) => {
     const router = useRouter();
     const params = useParams();
     return (
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`${typeCapitalName} (${data.length})`}
+                    title={`${Types} (${data.length})`}
                     description={`Manage ${type} for your store`}
                 />
                 <Button onClick={() => router.push(`/${params.storeid}/${type}/new`)}>
@@ -37,7 +37,7 @@ export const Client = ({ data, type, typeId, typeCapitalName, columns }: ClientP
             </div>
             <Separator />
             <DataTable searchKey="name" columns={columns} data={data} />
-            <Heading title="API" description={`API calls for ${typeCapitalName}`} />
+            <Heading title="API" description={`API calls for ${Types}`} />
             <Separator />
             <ApiList entityName={type} entityIdName={typeId} />
         </>

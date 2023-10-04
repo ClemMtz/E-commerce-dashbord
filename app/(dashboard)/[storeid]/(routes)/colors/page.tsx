@@ -29,7 +29,7 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
                 <Client
                     data={formatedColors}
                     type="colors"
-                    typeCapitalName="Colors"
+                    Types="Colors"
                     typeId="colorId"
                     columns={columns}
                 />

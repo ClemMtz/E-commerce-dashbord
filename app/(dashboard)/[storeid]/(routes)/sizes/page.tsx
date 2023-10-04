@@ -30,7 +30,7 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
                 <Client
                     data={formatedSizes}
                     type="sizes"
-                    typeCapitalName="Sizes"
+                    Types="Sizes"
                     typeId="sizeId"
                     columns={columns}
                 />

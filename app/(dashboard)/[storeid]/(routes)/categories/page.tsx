@@ -33,7 +33,7 @@ const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
                 <Client
                     data={formatedCategories}
                     type="categories"
-                    typeCapitalName="Categories"
+                    Types="Categories"
                     typeId="categoryId"
                     columns={columns}
                 />

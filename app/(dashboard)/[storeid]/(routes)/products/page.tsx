@@ -41,7 +41,7 @@ const ProductsPage = async ({ params }: { params: { storeId: string } }) => {
                 <Client
                     data={formattedProducts}
                     type="products"
-                    typeCapitalName="Products"
+                    Types="Products"
                     typeId="productId"
                     columns={columns}
                 />

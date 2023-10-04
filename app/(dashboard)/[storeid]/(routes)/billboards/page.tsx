@@ -28,7 +28,7 @@ const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
                 <Client
                     data={formatedBillboards}
                     type="billboards"
-                    typeCapitalName="Billboards"
+                    Types="Billboards"
                     typeId="bilborardId"
                     columns={columns}
                 />
