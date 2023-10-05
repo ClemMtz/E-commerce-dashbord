@@ -1,6 +1,6 @@
 "use client";
 
-import * as z from "zod";
+
 import {
     Category,
     Color,
@@ -10,7 +10,7 @@ import {
 } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolverServerProduct } from "@/components/resolver/form-zodResolverProduct";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -39,7 +39,6 @@ import {
 } from "@/components/ui/select";
 import ImageUpload from "@/components/ui/image-upload";
 import { Checkbox } from "@/components/ui/checkbox";
-import { zodResolverServerProduct } from "@/components/resolver/form-zodResolverProduct";
 
 
 
