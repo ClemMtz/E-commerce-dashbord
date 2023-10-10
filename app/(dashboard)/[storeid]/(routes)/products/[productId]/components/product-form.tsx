@@ -11,7 +11,7 @@ import {
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolverServerProduct } from "@/components/resolver/form-zodResolverProduct";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
@@ -39,6 +39,8 @@ import {
 } from "@/components/ui/select";
 import ImageUpload from "@/components/ui/image-upload";
 import { Checkbox } from "@/components/ui/checkbox";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
+import * as tf from '@tensorflow/tfjs';
 
 
 
@@ -63,17 +65,45 @@ type ProductFormProps = {
     sizes: Size[];
 };
 
-export const ProductForm = ({ initialData, categories, colors, sizes }: ProductFormProps) => {
+export const ProductForm = ({ initialData, categories, colors, sizes, }: ProductFormProps) => {
+
+    // useEffect(() => {
+    //     setIsMounted(true);
+    // }, []);
+
+
+    useEffect(() => {
+        async function loadCocoSsd() {
+            try {
+                await tf.ready();
+                const model = await cocoSsd.load();
+                setModel(model);
+
+            } catch (error) {
+                console.log("Error loading the COCO-SSD model", error)
+            }
+        }
+
+        loadCocoSsd();
+    }, []);
+
+
     const params = useParams();
     const router = useRouter();
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [model, setModel] = useState<cocoSsd.ObjectDetection | null>(null);
+    // const [isMounted, setIsMounted] = useState(false);
 
     const title = initialData ? "Edit product" : "Create product";
     const description = initialData ? "Edit product" : "Add a new product";
     const toastMessage = initialData ? "Product updated" : "Product created";
     const action = initialData ? "Save changes" : "Create";
+
+    // if (!isMounted) {
+    //     return null
+    // }
 
     const form = useForm<ProductFormValues>({
         resolver: zodResolverServerProduct,
@@ -123,7 +153,18 @@ export const ProductForm = ({ initialData, categories, colors, sizes }: ProductF
             setLoading(false)
             setOpen(false)
         }
+    };
+
+    const handleObjectDetection = (detectedObjects: any) => {
+        console.log("detected objects:", detectedObjects)
+        if (detectedObjects === "name") {
+            toast.success("Image detection match")
+        } else {
+            toast.error("Do you think it looks like ?")
+        }
     }
+
+
 
     return (
         <>
@@ -164,6 +205,8 @@ export const ProductForm = ({ initialData, categories, colors, sizes }: ProductF
                                         disabled={loading}
                                         onChange={(url) => field.onChange([...field.value, { url }])}
                                         onRemove={(url) => field.onChange([...field.value.filter((current: any) => current.url !== url)])}
+                                        onUpload={handleObjectDetection}
+                                        model={model}
                                     />
                                 </FormControl>
                                 <FormMessage />

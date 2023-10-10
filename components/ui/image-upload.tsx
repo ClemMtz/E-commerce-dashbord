@@ -1,29 +1,50 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, createElement } from "react";
 import Image from "next/image";
 import { ImagePlus, Trash } from "lucide-react";
 import { CldUploadWidget } from "next-cloudinary";
-
 import { Button } from "@/components/ui/button";
+import * as tf from "@tensorflow/tfjs";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
+
 
 type ImageUploadProps = {
     disabled?: boolean;
     onChange: (value: String) => void;
     onRemove: (value: String) => void;
+    onUpload?: (value: any) => void;
     value: string[];
+    model: cocoSsd.ObjectDetection | null;
 }
 
-const ImageUpload = ({ disabled, onChange, onRemove, value }: ImageUploadProps) => {
+
+const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: ImageUploadProps) => {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
-    const onUpload = (result: any) => {
+
+    const handleImageUpload = (result: any) => {
+
         onChange(result.info.secure_url);
-    }
+
+        if (model) {
+            const image = document.createElement('img');
+            image.crossOrigin = "anonymous";
+            image.src = result.info.secure_url;
+
+            image.onload = async () => {
+                const predictions = await model.detect(image);
+
+                if (onUpload) {
+                    onUpload(predictions);
+                }
+            }
+        }
+    };
 
     if (!isMounted) {
         return null;
@@ -48,7 +69,7 @@ const ImageUpload = ({ disabled, onChange, onRemove, value }: ImageUploadProps) 
                     </div>
                 ))}
             </div>
-            <CldUploadWidget onUpload={onUpload} uploadPreset="jbkophcf">
+            <CldUploadWidget onUpload={handleImageUpload} uploadPreset="jbkophcf">
                 {({ open }) => {
                     const onClick = () => {
                         open();
