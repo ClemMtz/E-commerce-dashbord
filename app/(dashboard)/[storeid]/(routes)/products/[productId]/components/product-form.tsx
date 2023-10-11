@@ -94,12 +94,15 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [model, setModel] = useState<cocoSsd.ObjectDetection | null>(null);
+    const [newValue, setNewValue] = useState("");
     // const [isMounted, setIsMounted] = useState(false);
 
     const title = initialData ? "Edit product" : "Create product";
     const description = initialData ? "Edit product" : "Add a new product";
     const toastMessage = initialData ? "Product updated" : "Product created";
     const action = initialData ? "Save changes" : "Create";
+
+
 
     // if (!isMounted) {
     //     return null
@@ -156,15 +159,15 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
     };
 
     const handleObjectDetection = (detectedObjects: any) => {
-        console.log("detected objects:", detectedObjects)
-        if (detectedObjects === "name") {
-            toast.success("Image detection match")
+        console.log("detected objects:", detectedObjects[0].class)
+        if (detectedObjects[0].class === newValue) {
+            toast.success("Image detection matchs with name")
         } else {
-            toast.error("Do you think it looks like ?")
+            toast.error(`Do you think it looks like ${newValue} ?`)
         }
     }
 
-
+    console.log(newValue)
 
     return (
         <>
@@ -221,7 +224,15 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Product label"  {...field} />
+                                        <Input
+                                            disabled={loading}
+                                            placeholder="Product label"  {...field}
+                                            onChange={(e) => {
+                                                const newValue = e.target.value;
+                                                setNewValue(newValue)
+                                                field.onChange(e);
+                                            }}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
