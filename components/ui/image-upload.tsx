@@ -5,7 +5,6 @@ import Image from "next/image";
 import { ImagePlus, Trash } from "lucide-react";
 import { CldUploadWidget } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
-import * as tf from "@tensorflow/tfjs";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 
 
@@ -20,11 +19,7 @@ type ImageUploadProps = {
 
 
 const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: ImageUploadProps) => {
-    const [isMounted, setIsMounted] = useState(false);
 
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
 
 
     const handleImageUpload = (result: any) => {
@@ -36,6 +31,7 @@ const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: I
             image.crossOrigin = "anonymous";
             image.src = result.info.secure_url;
 
+
             image.onload = async () => {
                 const predictions = await model.detect(image);
 
@@ -44,11 +40,9 @@ const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: I
                 }
             }
         }
+
     };
 
-    if (!isMounted) {
-        return null;
-    }
 
     return (
         <div>

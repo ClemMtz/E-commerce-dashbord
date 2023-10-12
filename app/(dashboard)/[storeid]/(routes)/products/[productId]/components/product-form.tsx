@@ -67,10 +67,6 @@ type ProductFormProps = {
 
 export const ProductForm = ({ initialData, categories, colors, sizes, }: ProductFormProps) => {
 
-    // useEffect(() => {
-    //     setIsMounted(true);
-    // }, []);
-
 
     useEffect(() => {
         async function loadCocoSsd() {
@@ -95,7 +91,10 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
     const [loading, setLoading] = useState(false);
     const [model, setModel] = useState<cocoSsd.ObjectDetection | null>(null);
     const [newValue, setNewValue] = useState("");
-    // const [isMounted, setIsMounted] = useState(false);
+    const [objectDetected, setObjectDetected] = useState("");
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
+
 
     const title = initialData ? "Edit product" : "Create product";
     const description = initialData ? "Edit product" : "Add a new product";
@@ -103,10 +102,6 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
     const action = initialData ? "Save changes" : "Create";
 
 
-
-    // if (!isMounted) {
-    //     return null
-    // }
 
     const form = useForm<ProductFormValues>({
         resolver: zodResolverServerProduct,
@@ -132,6 +127,11 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
             if (initialData) {
                 await axios.patch(`/api/${params.storeid}/products/${params.productId}`, data);
             } else {
+                if (objectDetected !== newValue) {
+                    toast.error("Image doesn't match the name. Please check or upload clearer image.");
+                    setLoading(false);
+                    return;
+                }
                 await axios.post(`/api/${params.storeid}/products`, data);
             }
             router.refresh();
@@ -158,16 +158,39 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
         }
     };
 
-    const handleObjectDetection = (detectedObjects: any) => {
-        console.log("detected objects:", detectedObjects[0].class)
-        if (detectedObjects[0].class === newValue) {
-            toast.success("Image detection matchs with name")
-        } else {
-            toast.error(`Do you think it looks like ${newValue} ?`)
+    useEffect(() => {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
         }
-    }
 
-    console.log(newValue)
+        if (!newValue) {
+            return;
+        }
+
+        const newTimeoutId = setTimeout(() => {
+
+            if (objectDetected === newValue) {
+                toast.success("Image detection match the name.")
+            } else {
+                toast.error(`Do you think a ${objectDetected} looks like a ${newValue} ?`)
+            }
+        }, 1000)
+
+        setTimeoutId(newTimeoutId);
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+
+    }, [newValue]);
+
+    const handleObjectDetection = (detectedObjects: any) => {
+        setObjectDetected(detectedObjects[0].class)
+    };
+
+
 
     return (
         <>
