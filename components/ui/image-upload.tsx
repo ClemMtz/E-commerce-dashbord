@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useEffect, createElement } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { ImagePlus, Trash } from "lucide-react";
 import { CldUploadWidget } from "next-cloudinary";
 import { Button } from "@/components/ui/button";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
+
+
 
 
 type ImageUploadProps = {
@@ -18,9 +20,11 @@ type ImageUploadProps = {
 }
 
 
+
+
 const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: ImageUploadProps) => {
 
-
+    const detectedWords: string[] = [];
 
     const handleImageUpload = (result: any) => {
 
@@ -42,6 +46,63 @@ const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: I
         }
 
     };
+
+    const extractCommonWords = (detectedWords: string[]) => {
+
+        if (detectedWords.length === 0) {
+            return "";
+        }
+
+        const wordCounts: any = {};
+        let CommonWord = detectedWords[0].toLowerCase();
+
+
+        for (const word of detectedWords) {
+            const foundWord = word.toLowerCase();
+
+            if (wordCounts[foundWord]) {
+                wordCounts[foundWord] += 1;
+            } else {
+                wordCounts[foundWord] = 1;
+            }
+
+            if (wordCounts[foundWord] > wordCounts[CommonWord]) {
+                CommonWord = foundWord;
+            }
+        }
+
+        return CommonWord;
+
+    };
+
+
+    useEffect(() => {
+
+        if (model && value.length > 0) {
+            value.forEach((imageUrl) => {
+                const image = document.createElement('img');
+                image.crossOrigin = "anonymous";
+                image.src = imageUrl;
+
+                image.onload = async () => {
+                    const predictions = await model.detect(image);
+
+
+                    const detectedClasses = predictions.map((prediction) => prediction.class);
+                    detectedWords.push(...detectedClasses);
+                    console.log('array', detectedWords)
+                    const commonWord = extractCommonWords(detectedWords)
+                    if (onUpload) {
+                        onUpload({ predictions, commonWord });
+                    }
+                };
+            });
+        }
+
+
+
+    }, [model, value]);
+
 
 
     return (

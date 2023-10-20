@@ -90,9 +90,11 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [model, setModel] = useState<cocoSsd.ObjectDetection | null>(null);
-    const [newValue, setNewValue] = useState("");
-    const [objectDetected, setObjectDetected] = useState("");
+    const [nameInput, setNameInput] = useState("");
+    const [commonWord, setCommonWord] = useState("");
+    console.log(commonWord)
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+    const [userInput, setUserInput] = useState('');
 
 
 
@@ -127,8 +129,8 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
             if (initialData) {
                 await axios.patch(`/api/${params.storeid}/products/${params.productId}`, data);
             } else {
-                if (objectDetected !== newValue) {
-                    toast.error("Image doesn't match the name. Please check or upload clearer image.");
+                if (commonWord !== nameInput) {
+                    toast.error("Image doesn't match the name. Please check or upload clearer images.");
                     setLoading(false);
                     return;
                 }
@@ -163,18 +165,22 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
             clearTimeout(timeoutId);
         }
 
-        if (!newValue) {
+        if (!nameInput) {
+            return;
+        }
+
+        if (!userInput || !commonWord) {
             return;
         }
 
         const newTimeoutId = setTimeout(() => {
 
-            if (objectDetected === newValue) {
+            if (commonWord && nameInput.toLowerCase().includes(commonWord.toLowerCase())) {
                 toast.success("Image detection match the name.")
             } else {
-                toast.error(`Do you think a ${objectDetected} looks like a ${newValue} ?`)
+                toast.error(`Do you think a ${commonWord} looks like a ${nameInput} ?`)
             }
-        }, 1000)
+        }, 1500)
 
         setTimeoutId(newTimeoutId);
 
@@ -184,10 +190,10 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
             }
         };
 
-    }, [newValue]);
+    }, [nameInput]);
 
-    const handleObjectDetection = (detectedObjects: any) => {
-        setObjectDetected(detectedObjects[0].class)
+    const handleObjectDetection = ({ predictions, commonWord }: { predictions: any[], commonWord: string }) => {
+        setCommonWord(commonWord)
     };
 
 
@@ -252,7 +258,8 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
                                             placeholder="Product label"  {...field}
                                             onChange={(e) => {
                                                 const newValue = e.target.value;
-                                                setNewValue(newValue)
+                                                setNameInput(newValue)
+                                                setUserInput(newValue);
                                                 field.onChange(e);
                                             }}
                                         />
