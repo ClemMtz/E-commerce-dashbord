@@ -92,10 +92,8 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
     const [model, setModel] = useState<cocoSsd.ObjectDetection | null>(null);
     const [nameInput, setNameInput] = useState("");
     const [commonWord, setCommonWord] = useState("");
-    console.log(commonWord)
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
     const [userInput, setUserInput] = useState('');
-
 
 
     const title = initialData ? "Edit product" : "Create product";
@@ -129,7 +127,7 @@ export const ProductForm = ({ initialData, categories, colors, sizes, }: Product
             if (initialData) {
                 await axios.patch(`/api/${params.storeid}/products/${params.productId}`, data);
             } else {
-                if (commonWord !== nameInput) {
+                if (!commonWord || !nameInput || !nameInput.toLowerCase().includes(commonWord.toLowerCase())) {
                     toast.error("Image doesn't match the name. Please check or upload clearer images.");
                     setLoading(false);
                     return;

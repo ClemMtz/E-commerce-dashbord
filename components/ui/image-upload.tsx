@@ -90,7 +90,6 @@ const ImageUpload = ({ disabled, onChange, onRemove, onUpload, value, model }: I
 
                     const detectedClasses = predictions.map((prediction) => prediction.class);
                     detectedWords.push(...detectedClasses);
-                    console.log('array', detectedWords)
                     const commonWord = extractCommonWords(detectedWords)
                     if (onUpload) {
                         onUpload({ predictions, commonWord });
