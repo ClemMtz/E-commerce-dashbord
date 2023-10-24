@@ -16,7 +16,7 @@ type ImageUploadProps = {
     onRemove: (value: String) => void;
     onUpload?: (value: any) => void;
     value: string[];
-    model: cocoSsd.ObjectDetection | null;
+    model?: cocoSsd.ObjectDetection | null;
 }
 
 
