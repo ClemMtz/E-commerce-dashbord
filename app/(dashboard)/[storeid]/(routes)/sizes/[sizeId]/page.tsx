@@ -19,7 +19,7 @@ const SizePage = async ({ params }: { params: { sizeId: string } }) => {
                     initialData={size}
                     type="size"
                     Type="Size"
-                    typeId="sizeId"
+                    typeId={params.sizeId}
                     types="sizes"
                     formLabelOne="name"
                     formLabelTwo="value"

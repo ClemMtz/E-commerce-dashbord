@@ -22,7 +22,7 @@ const ColorPage = async ({ params }: { params: { colorId: string } }) => {
                     initialData={color}
                     type="color"
                     Type="Color"
-                    typeId="colorId"
+                    typeId={params.colorId}
                     types="colors"
                     formLabelOne="name"
                     formLabelTwo="value"

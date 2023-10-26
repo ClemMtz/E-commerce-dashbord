@@ -17,7 +17,7 @@ const BillboardPage = async ({ params }: { params: { billboardId: string } }) =>
                     initialData={billboard}
                     type="billboard"
                     Type="Billboard"
-                    typeId="billboardId"
+                    typeId={params.billboardId}
                     types="billboards"
                     formLabelOne="name"
                     formLabelTwo="imageUrl"

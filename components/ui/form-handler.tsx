@@ -55,13 +55,12 @@ export type FormHandlerProps = {
     formLabelTwo: any;
 }
 
-export const FormHandler = ({ initialData, type, Type, types, formLabelOne, formLabelTwo, hex, billboards }: FormHandlerProps) => {
+export const FormHandler = ({ initialData, type, Type, types, formLabelOne, formLabelTwo, hex, billboards, typeId }: FormHandlerProps) => {
     const params = useParams();
     const router = useRouter();
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-
     const title = initialData ? `Edit ${type}` : `Create ${type}`;
     const description = initialData ? `Edit ${type}` : `Add a new ${type}`;
     const toastMessage = initialData ? `${Type} updated` : `${Type} created`;
@@ -81,12 +80,11 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
 
 
 
-
     const onSubmit = async (data: DataFormValues) => {
         try {
             setLoading(true);
             if (initialData) {
-                await axios.patch(`/api/${params.storeid}/${types}/${params.typeId}`, data);
+                await axios.patch(`/api/${params.storeid}/${types}/${typeId}`, data);
             } else {
                 await axios.post(`/api/${params.storeid}/${types}`, data);
             }
@@ -103,7 +101,7 @@ export const FormHandler = ({ initialData, type, Type, types, formLabelOne, form
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeid}/${types}/${params.typeId}`);
+            await axios.delete(`/api/${params.storeid}/${types}/${typeId}`);
             router.refresh();
             router.push(`/${params.storeid}/${types}`);
             toast.success(`${Type} deleted.`);
