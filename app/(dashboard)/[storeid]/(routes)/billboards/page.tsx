@@ -5,10 +5,10 @@ import { prismadb } from "@/lib/prisamdb";
 import { BillboardColumn, columns } from "./components/columns";
 import { Client } from "@/components/ui/client";
 
-const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
+const BillboardsPage = async ({ params }: { params: { storeid: string } }) => {
     const billboards = await prismadb.billboard.findMany({
         where: {
-            storeId: params.storeId
+            storeId: params.storeid
         },
         orderBy: {
             createdAt: "desc"

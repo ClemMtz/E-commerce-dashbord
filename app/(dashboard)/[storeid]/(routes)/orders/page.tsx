@@ -6,10 +6,10 @@ import { formatteur } from "@/lib/utils";
 import { OrderClient } from "./components/client";
 import { OrderColumn } from "./components/columns";
 
-const OrdersPage = async ({ params }: { params: { storeId: string } }) => {
+const OrdersPage = async ({ params }: { params: { storeid: string } }) => {
     const orders = await prismadb.order.findMany({
         where: {
-            storeId: params.storeId
+            storeId: params.storeid
         },
         include: {
             orderItems: {

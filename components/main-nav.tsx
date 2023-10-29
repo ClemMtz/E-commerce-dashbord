@@ -54,9 +54,11 @@ export function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElemen
 
 
 
+
     return (
         <nav
             className={cn("flex items-center space-x-4 lg:space-x-6", className)}
+            {...props}
         >
             {routes.map((route) => (
                 <Link
