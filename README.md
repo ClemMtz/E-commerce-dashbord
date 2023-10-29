@@ -25,19 +25,26 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
  See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
 DATABASE_URL=''
+
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=""
+
 STRIPE_API_KEY=
+
 FRONTEND_STORE_URL=http://localhost:3001
+
 STRIPE_WEBHOOK_SECRET=
 
 # Connect to PlanetScale and Push Prisma
 npx prisma generate
+
 npx prisma db push
 
 # Connect to PlanetScale and Push Prisma
 npx prisma generate
+
 npx prisma db push
 
 # Start the app
 npm run dev
-make sure the app runs on port: http://localhost:3000
+
+run on port: http://localhost:3000
