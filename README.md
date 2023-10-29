@@ -1,7 +1,7 @@
+This E-commerce-dashboard repository is in conncection with the E-commerce-store
+
 # Install packages
 npm i
-
-Run this repository on port:http://localhost:3000
 
 # Setup .env file
 
@@ -36,3 +36,4 @@ npx prisma db push
 
 # Start the app
 npm run dev
+make sure the app runs on port: http://localhost:3000
