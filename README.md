@@ -4,7 +4,6 @@ This E-commerce-dashboard repository is in conncection with the E-commerce-store
 npm i
 
 # Setup .env file
-
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
@@ -30,10 +29,8 @@ npx prisma generate
 npx prisma db push
 
 # Connect to PlanetScale and Push Prisma
-
 npx prisma generate
 npx prisma db push
-
 
 # Start the app
 npm run dev
