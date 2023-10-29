@@ -1,6 +1,7 @@
 This E-commerce-dashboard repository is in conncection with the E-commerce-store
 
 # Install packages
+
 npm i
 
 # Setup .env file
