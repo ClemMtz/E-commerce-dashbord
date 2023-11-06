@@ -26,6 +26,7 @@ import { AlertModal } from "@/components/modals/alert-modals";
 import { ApiAlert } from "@/components/ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
 
+
 type SettingsFormProps = {
     initialData: Store;
 };
@@ -128,7 +129,6 @@ export const SettingsForm = ({ initialData }: SettingsFormProps) => {
                 description={`${origin}/api/${params.storeid}`}
                 variant="public"
             />
-
         </>
     )
 };

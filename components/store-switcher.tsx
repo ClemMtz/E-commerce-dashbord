@@ -24,6 +24,8 @@ import {
     CommandSeparator
 } from "@/components/ui/command";
 
+import axios from "axios";
+
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
 type StoreSwitcherProps = PopoverTriggerProps & {
@@ -46,10 +48,11 @@ export default function StoreSwitcher({ className, items = [] }: StoreSwitcherPr
 
     const [open, setOpen] = useState(false);
 
+
     const onStoreSelected = (store: { value: string, label: string }) => {
         setOpen(false);
         router.push(`/${store.value}`);
-    };
+    }
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

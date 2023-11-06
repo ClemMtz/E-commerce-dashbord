@@ -1,7 +1,9 @@
 import { auth } from "@clerk/nextjs";
+
 import { NextResponse } from "next/server";
 
 import { prismadb } from "@/lib/prisamdb";
+
 
 
 export async function POST(
@@ -24,7 +26,8 @@ export async function POST(
         const store = await prismadb.store.create({
             data: {
                 name,
-                userId
+                userId,
+
             }
         });
 
@@ -35,3 +38,4 @@ export async function POST(
         return new NextResponse("Internal error", { status: 500 });
     }
 }
+
