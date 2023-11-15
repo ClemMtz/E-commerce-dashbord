@@ -24,7 +24,6 @@ import {
     CommandSeparator
 } from "@/components/ui/command";
 
-import axios from "axios";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -45,8 +44,8 @@ export default function StoreSwitcher({ className, items = [] }: StoreSwitcherPr
 
     const currentStore = formattedItems.find((item) => item.value === params.storeid);
 
-
     const [open, setOpen] = useState(false);
+
 
 
     const onStoreSelected = (store: { value: string, label: string }) => {
