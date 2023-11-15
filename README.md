@@ -39,11 +39,6 @@ npx prisma generate
 
 npx prisma db push
 
-# Connect to PlanetScale and Push Prisma
-npx prisma generate
-
-npx prisma db push
-
 # Start the app
 npm run dev
 
