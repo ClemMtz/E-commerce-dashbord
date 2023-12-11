@@ -19,7 +19,7 @@ https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/7e58370f-6d23-4d
 ## Save it...
 https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/307060fe-75d6-4c5d-86aa-b62e61981821
 
-## The product is now display in the E-commerce store..
+## The product is now display in the e-commerce store..
 https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/fafb27e4-dfb9-42ff-a1ee-595dc4e28e23
 
 
