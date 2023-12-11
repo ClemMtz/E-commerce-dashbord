@@ -22,6 +22,14 @@ https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/307060fe-75d6-4c
 ## The product is now display in the e-commerce store..
 https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/fafb27e4-dfb9-42ff-a1ee-595dc4e28e23
 
+## Feel free to update...
+https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/1c8ba831-66cb-4cdd-a350-3728d610dee9
+
+## Or to delete...
+https://github.com/ClemMtz/E-commerce-dashbord/assets/121759512/e81014d8-642c-4521-97ed-e1462a8fbf21
+
+
+
 
 
 
